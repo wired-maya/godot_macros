@@ -10,5 +10,5 @@ Add the following to your `Cargo.toml`.
 
 ```toml
 [dependencies]
-godot_macros = { git = "https://github.com/godot-rust/gdext", branch = "master" }
+godot_macros = { git = "https://github.com/wired-maya/godot_macros", branch = "master" }
 ```
