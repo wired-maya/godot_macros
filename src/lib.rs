@@ -1,6 +1,8 @@
 //! A simple crate that adds a variety of godot (specifically gdext) related macros for convenience.
 
 // TODO: Write docs that pass tests
+// TODO: Doc everything
+// TODO: Readme!
 
 /// Macro for quickly getting a non-mutable reference to a node from its path. Can choose to specify node type, otherwise defaults to Node.
 ///
@@ -90,5 +92,89 @@ macro_rules! connect {
     };
     ($self:ident, $node_path_1:expr, $signal:expr, $node_path_2:expr, $callback_name:expr) => {
         n!($self, $node_path_1).connect($signal.into(), n!($self, $node_path_2).callable($callback_name));
+    };
+}
+
+#[macro_export]
+macro_rules! any_press {
+    () => {
+        Input::singleton().is_anything_pressed()
+    };
+}
+
+#[macro_export]
+macro_rules! key_press {
+    ($keycode:expr) => {
+        Input::singleton().is_key_pressed($keycode)
+    };
+}
+
+#[macro_export]
+macro_rules! key_press_phys {
+    ($keycode:expr) => {
+        Input::singleton().is_physical_key_pressed($keycode)
+    };
+}
+
+#[macro_export]
+macro_rules! key_press_label {
+    ($keycode:expr) => {
+        Input::singleton().is_key_label_pressed($keycode)
+    };
+}
+
+#[macro_export]
+macro_rules! mouse_press {
+    ($button:expr) => {
+        Input::singleton().is_mouse_button_pressed($button)
+    };
+}
+
+#[macro_export]
+macro_rules! joy_press {
+    ($device:expr, $button:expr) => {
+        Input::singleton().is_joy_button_pressed($device, $button)
+    };
+}
+
+#[macro_export]
+macro_rules! act_press {
+    ($action:expr) => {
+        Input::singleton().is_action_pressed($action.into())
+    };
+}
+
+#[macro_export]
+macro_rules! act_press_down {
+    ($action:expr) => {
+        Input::singleton().is_action_just_pressed($action.into())
+    };
+}
+
+#[macro_export]
+macro_rules! act_press_up {
+    ($action:expr) => {
+        Input::singleton().is_action_just_released($action.into())
+    };
+}
+
+#[macro_export]
+macro_rules! act_str {
+    ($action:expr) => {
+        Input::singleton().get_action_strength($action.into())
+    };
+}
+
+#[macro_export]
+macro_rules! act_str_raw {
+    ($action:expr) => {
+        Input::singleton().get_action_raw_strength($action.into())
+    };
+}
+
+#[macro_export]
+macro_rules! act_axis {
+    ($negative_action:expr, $positive_action:expr) => {
+        Input::singleton().get_axis($negative_action.into(), $positive_action.into())
     };
 }
