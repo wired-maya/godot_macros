@@ -88,10 +88,10 @@ macro_rules! nm {
 #[macro_export]
 macro_rules! connect {
     ($self:ident, $node_path:expr, $signal:expr, $callback_name:expr) => {
-        n!($self, $node_path).connect($signal.into(), $self.base().callable($callback_name));
+        n!($self, $node_path).connect($signal.into(), $self.base().callable($callback_name))
     };
     ($self:ident, $node_path_1:expr, $signal:expr, $node_path_2:expr, $callback_name:expr) => {
-        n!($self, $node_path_1).connect($signal.into(), n!($self, $node_path_2).callable($callback_name));
+        n!($self, $node_path_1).connect($signal.into(), n!($self, $node_path_2).callable($callback_name))
     };
 }
 
@@ -176,5 +176,26 @@ macro_rules! act_str_raw {
 macro_rules! act_axis {
     ($negative_action:expr, $positive_action:expr) => {
         Input::singleton().get_axis($negative_action.into(), $positive_action.into())
+    };
+}
+
+#[macro_export]
+macro_rules! emit {
+    ($self:ident, $signal:expr) => {
+        $self.base_mut().emit_signal($signal.into(), &[])
+    };
+}
+
+#[macro_export]
+macro_rules! free {
+    ($self:ident) => {
+        $self.base_mut().queue_free()
+    };
+}
+
+#[macro_export]
+macro_rules! reload {
+    ($self:ident) => {
+        $self.base_mut().get_tree().expect("Node has no tree").reload_current_scene()
     };
 }
